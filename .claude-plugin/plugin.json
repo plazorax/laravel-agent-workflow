@@ -1,0 +1,14 @@
+{
+  "name": "laravel-agent-workflow",
+  "displayName": "Laravel Agent Workflow",
+  "version": "0.1.0",
+  "description": "Quality gates for AI-assisted Laravel development: protected paths, Pint on save, Larastan and tests before stopping, plus review agents and a TDD skill. Designed to run next to Laravel Boost.",
+  "author": {
+    "name": "Oleksii Shaposhnikov",
+    "url": "https://github.com/plazorax"
+  },
+  "homepage": "https://github.com/plazorax/laravel-agent-workflow",
+  "repository": "https://github.com/plazorax/laravel-agent-workflow",
+  "license": "MIT",
+  "keywords": ["laravel", "php", "pint", "larastan", "pest", "hooks", "code-review", "tdd"]
+}

@@ -1,0 +1,42 @@
+{
+    "name": "plazorax/laravel-agent-workflow",
+    "description": "Claude Code plugin with quality gates for AI-assisted Laravel development. This composer.json only drives the plugin's own test suite.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oleksii Shaposhnikov"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.18",
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaravelAgentWorkflow\\Tests\\": "tests/"
+        },
+        "files": [
+            "scripts/lib.php"
+        ]
+    },
+    "scripts": {
+        "test": "phpunit",
+        "analyse": "phpstan analyse --no-progress",
+        "lint": "pint --test",
+        "check": [
+            "@lint",
+            "@analyse",
+            "@test"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable"
+}

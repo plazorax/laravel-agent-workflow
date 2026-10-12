@@ -1,0 +1,15 @@
+{
+  "name": "plazorax-laravel",
+  "description": "Claude Code plugins for Laravel development by Oleksii Shaposhnikov.",
+  "owner": {
+    "name": "Oleksii Shaposhnikov",
+    "url": "https://github.com/plazorax"
+  },
+  "plugins": [
+    {
+      "name": "laravel-agent-workflow",
+      "source": "./",
+      "description": "Quality gates, review agents and a TDD skill for AI-assisted Laravel development."
+    }
+  ]
+}

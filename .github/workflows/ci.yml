@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hooks:
+    name: Hook scripts (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.2', '8.3', '8.4']
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Install dev dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Pint
+        run: vendor/bin/pint --test
+
+      - name: PHPStan
+        run: vendor/bin/phpstan analyse --no-progress
+
+      - name: PHPUnit
+        run: vendor/bin/phpunit
+
+  plugin:
+    name: Plugin manifest and shell lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Validate plugin, marketplace, agents and skills
+        run: |
+          npx --yes @anthropic-ai/claude-code@2.1.282 plugin validate --strict .
+          npx --yes @anthropic-ai/claude-code@2.1.282 plugin validate --strict .claude-plugin/plugin.json
+          npx --yes @anthropic-ai/claude-code@2.1.282 plugin validate --strict agents
+          npx --yes @anthropic-ai/claude-code@2.1.282 plugin validate --strict skills
+
+      - name: ShellCheck
+        run: shellcheck tests/smoke/smoke.sh
+
+  smoke:
+    name: Smoke test against a fresh Laravel app
+    runs-on: ubuntu-latest
+    needs: hooks
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_sqlite, sqlite3
+          coverage: none
+
+      - name: Run smoke test
+        run: tests/smoke/smoke.sh "$RUNNER_TEMP/smoke"
