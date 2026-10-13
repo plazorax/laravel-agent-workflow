@@ -1,4 +1,4 @@
-# laravel-agent-workflow
+# Laravel Agent Workflow
 
 ![CI](https://github.com/plazorax/laravel-agent-workflow/actions/workflows/ci.yml/badge.svg)
 
